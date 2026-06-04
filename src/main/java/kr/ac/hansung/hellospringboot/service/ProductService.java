@@ -1,5 +1,6 @@
 package kr.ac.hansung.hellospringboot.service;
 
+import kr.ac.hansung.hellospringboot.dto.ProductDto;
 import kr.ac.hansung.hellospringboot.model.Product;
 import kr.ac.hansung.hellospringboot.repository.ProductRepository;
 import org.springframework.data.domain.Page;
@@ -80,7 +81,22 @@ public class ProductService {
     }
 
     /**
-     * 상품 수정
+     * 상품 수정 (ProductDto 기반)
+     * 별도의 save() 호출 없이 Dirty Checking에 의해 자동 업데이트
+     */
+    @Transactional
+    public Optional<Product> updateProduct(Long id, ProductDto dto) {
+        return productRepository.findById(id).map(existingProduct -> {
+            existingProduct.setName(dto.getName());
+            existingProduct.setPrice(dto.getPrice());
+            existingProduct.setStock(dto.getStock());
+            existingProduct.setDescription(dto.getDescription());
+            return existingProduct;
+        });
+    }
+
+    /**
+     * 상품 수정 (API용 - Product 기반)
      * 존재하지 않는 ID이면 빈 Optional 반환 → Controller에서 404 처리
      */
     @Transactional
@@ -89,6 +105,7 @@ public class ProductService {
             // 기존 엔티티의 필드를 업데이트 (영속성 컨텍스트 내에서 Dirty Checking으로 자동 UPDATE)
             existingProduct.setName(productDetails.getName());
             existingProduct.setPrice(productDetails.getPrice());
+            existingProduct.setStock(productDetails.getStock());
             existingProduct.setDescription(productDetails.getDescription());
             return productRepository.save(existingProduct);
         });

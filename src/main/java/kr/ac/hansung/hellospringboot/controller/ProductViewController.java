@@ -1,5 +1,6 @@
 package kr.ac.hansung.hellospringboot.controller;
 
+import kr.ac.hansung.hellospringboot.dto.ProductDto;
 import kr.ac.hansung.hellospringboot.model.Product;
 import kr.ac.hansung.hellospringboot.service.ProductService;
 import org.springframework.data.domain.Page;
@@ -8,8 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ProductViewController {
@@ -44,5 +52,40 @@ public class ProductViewController {
 
         model.addAttribute("productPage", productPage);
         return "products/list";
+    }
+
+    @GetMapping("/products/{id}/edit")
+    public String editProductForm(@PathVariable("id") Long id, Model model) {
+        Product product = productService.getProductById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
+
+        ProductDto productDto = new ProductDto(
+                product.getName(),
+                product.getPrice(),
+                product.getStock(),
+                product.getDescription()
+        );
+
+        model.addAttribute("product", productDto);
+        model.addAttribute("productId", id);
+        return "products/edit";
+    }
+
+    @PostMapping("/products/{id}/edit")
+    public String editProduct(
+            @PathVariable("id") Long id,
+            @Valid @ModelAttribute("product") ProductDto productDto,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("productId", id);
+            return "products/edit";
+        }
+
+        productService.updateProduct(id, productDto);
+        redirectAttributes.addFlashAttribute("successMessage", "Product updated successfully!");
+        return "redirect:/products";
     }
 }

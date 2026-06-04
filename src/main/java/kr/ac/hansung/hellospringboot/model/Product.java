@@ -38,6 +38,9 @@ public class Product {
     @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private int stock = 0;
+
     @Column(columnDefinition = "TEXT")
     private String description;
 }
