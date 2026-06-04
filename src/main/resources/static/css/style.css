@@ -23,7 +23,7 @@ body {
     max-width: 900px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 /* Header */
@@ -101,6 +101,69 @@ body {
     font-weight: 600;
 }
 
+/* Search container & Inputs styling */
+.search-container {
+    background: rgba(30, 30, 46, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+    background: rgba(17, 17, 27, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #cdd6f4 !important;
+    border-radius: 10px !important;
+    padding: 0.6rem 1rem !important;
+    font-family: inherit;
+    transition: all 0.3s ease !important;
+}
+
+.search-input:focus {
+    border-color: #89b4fa !important;
+    box-shadow: 0 0 10px rgba(137, 180, 250, 0.3) !important;
+    background: rgba(17, 17, 27, 0.8) !important;
+}
+
+.search-input::placeholder {
+    color: #6c7086;
+}
+
+.search-button {
+    background: linear-gradient(135deg, #89b4fa 0%, #b4befe 100%) !important;
+    border: none !important;
+    color: #11111b !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    padding: 0.6rem 1.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(137, 180, 250, 0.4);
+    opacity: 0.95;
+}
+
+.reset-button {
+    background: rgba(49, 50, 68, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cdd6f4 !important;
+    font-weight: 500 !important;
+    border-radius: 10px !important;
+    padding: 0.6rem 1.2rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.reset-button:hover {
+    background: rgba(69, 71, 90, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: #f5e0dc !important;
+}
+
 /* Table styling */
 .table-container {
     width: 100%;
@@ -164,9 +227,55 @@ td {
     font-style: italic;
 }
 
+/* Bootstrap Pagination Styling overrides */
+.pagination-nav {
+    margin-top: 1rem;
+}
+
+.page-item .page-link {
+    background: rgba(30, 30, 46, 0.45) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #cdd6f4 !important;
+    padding: 0.6rem 1rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.page-item:first-child .page-link {
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.page-item:last-child .page-link {
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+}
+
+.page-item.active .page-link {
+    background: linear-gradient(135deg, #89b4fa 0%, #b4befe 100%) !important;
+    border-color: transparent !important;
+    color: #11111b !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 10px rgba(137, 180, 250, 0.3) !important;
+}
+
+.page-item.disabled .page-link {
+    background: rgba(17, 17, 27, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.03) !important;
+    color: #585b70 !important;
+    opacity: 0.6;
+}
+
+.page-item:not(.active):not(.disabled) .page-link:hover {
+    background: rgba(49, 50, 68, 0.8) !important;
+    border-color: rgba(137, 180, 250, 0.5) !important;
+    color: #89b4fa !important;
+    transform: translateY(-1px);
+}
+
 /* Footer styling */
 .app-footer {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     text-align: center;
     padding: 1.5rem;
     background: rgba(17, 17, 27, 0.4);
