@@ -2,6 +2,8 @@ package kr.ac.hansung.hellospringboot.service;
 
 import kr.ac.hansung.hellospringboot.model.Product;
 import kr.ac.hansung.hellospringboot.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,22 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    /**
+     * 페이징된 전체 상품 목록 조회
+     */
+    @Transactional(readOnly = true)
+    public Page<Product> getAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+    /**
+     * 키워드로 검색된 페이징 상품 목록 조회
+     */
+    @Transactional(readOnly = true)
+    public Page<Product> searchProducts(String keyword, Pageable pageable) {
+        return productRepository.findByNameContaining(keyword, pageable);
     }
 
     /**
